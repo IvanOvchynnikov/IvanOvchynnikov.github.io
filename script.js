@@ -94,7 +94,6 @@ function handleImageMouse(event) {
     tooltip.style.display = 'none';
 }
 
-// Функція для обробки події кліку на зображенні
 function handleImageClick(event) {
     tooltip.style.display = 'none';
     let img = event.target;
