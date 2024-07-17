@@ -61,41 +61,61 @@ let countries = {
     }
 };
 
+let tooltip = document.querySelector('.country-tooltip');
+
 // Функція, яка визначає, чи знаходиться точка в прямокутнику
 function isPointInRectangle(point, rectangle) {
-    // Extract point coordinates
     const [px, py] = point;
-
-    // Extract rectangle coordinates
     const [x1, y1] = rectangle.topLeft;
     const [x2, y2] = rectangle.bottomRight;
-
-    // Check if the point is within the rectangle bounds
     return px >= x1 && px <= x2 && py >= y1 && py <= y2;
 }
 
-// Обробник події кліку на зображенні
-document.getElementById('image').addEventListener('click', function (event) {
+// Функція для обробки події миші на зображенні
+function handleImageMouse(event) {
     let img = event.target;
-
-    // Отримання розмірів зображення
     let imgWidth = img.naturalWidth;
     let imgHeight = img.naturalHeight;
-
-    // Отримання розмірів контейнера (або вікна)
     let rect = img.getBoundingClientRect();
     let containerWidth = rect.width;
     let containerHeight = rect.height;
-
-    // Координати кліку відносно зображення
     let x = (event.clientX - rect.left) * (imgWidth / containerWidth);
     let y = (event.clientY - rect.top) * (imgHeight / containerHeight);
 
-    // Перевірка, чи точка знаходиться в будь-якому прямокутнику країни
     for (let country in countries) {
         if (isPointInRectangle([x, y], countries[country])) {
-            window.alert(`Clicked on ${country}`);
-            break; // Перервати цикл, якщо точка знайдена в прямокутнику країни
+            tooltip.textContent = country;
+            tooltip.style.left = (event.pageX + 10) + 'px';
+            tooltip.style.top = (event.pageY - 20) + 'px';
+            tooltip.style.display = 'block';
+            return; // Вийти з функції, якщо точка знайдена
         }
     }
-});
+    tooltip.style.display = 'none';
+}
+
+// Функція для обробки події кліку на зображенні
+function handleImageClick(event) {
+    tooltip.style.display = 'none';
+    let img = event.target;
+    let imgWidth = img.naturalWidth;
+    let imgHeight = img.naturalHeight;
+    let rect = img.getBoundingClientRect();
+    let containerWidth = rect.width;
+    let containerHeight = rect.height;
+    let x = (event.clientX - rect.left) * (imgWidth / containerWidth);
+    let y = (event.clientY - rect.top) * (imgHeight / containerHeight);
+
+    for (let country in countries) {
+        if (isPointInRectangle([x, y], countries[country])) {
+            tooltip.style.display = 'none'
+            window.alert(`Clicked on ${country}`);
+            return; // Вийти з функції, якщо точка знайдена
+        }
+    }
+}
+
+// Додавання обробників подій
+document.getElementById('image').addEventListener('click', handleImageClick);
+document.getElementById('image').addEventListener('mousemove', handleImageMouse);
+

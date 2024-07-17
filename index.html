@@ -14,11 +14,21 @@
             width: 100%;
             height: auto;
         }
+        .country-tooltip {
+            position: absolute;
+            background-color: white;
+            color: black;
+            padding: 5px;
+            border-radius: 5px;
+            pointer-events: none;
+            display: none;
+        }
     </style>
 </head>
 <body>
 <div class="image-container">
     <img id="image" src="main_map.png" alt="Map">
+    <div class="country-tooltip"></div>
 </div>
 <script src="script.js"></script>
 </body>
