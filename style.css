@@ -15,8 +15,9 @@ path:hover {
     position: absolute;
     background: #2138AB;
     color: #fff;
-    padding: 5px;
+    padding: 0.5vw;
     border-radius: 5px;
     opacity: 0;
     transition: opacity 0.2s;
+    font-size: 0.9vw;
 }
